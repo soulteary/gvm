@@ -1,7 +1,5 @@
 # gvm
 
-[![Build Status](https://travis-ci.org/soulteary/gvm.svg?branch=master)](https://travis-ci.org/soulteary/gvm)
-
 GVM provides an interface to manage Go versions.
 
 The current maintainer of the fork is [@soulteary](https://github.com/soulteary), fixed some issues that were not exposed in the past few years, **and supports Apple M1 devices**.
