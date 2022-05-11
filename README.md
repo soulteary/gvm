@@ -2,13 +2,13 @@
 
 [![Build Status](https://travis-ci.org/soulteary/gvm.svg?branch=master)](https://travis-ci.org/soulteary/gvm)
 
-By Josh Bussdieker (jbuss, jaja, jbussdieker) while working at [Moovweb](https://www.moovweb.com)
-
-Currently lovingly maintained by [Benjamin Knigge](https://github.com/BenKnigge)
-
-Pull requests and other any other contributions would be very much appreciated.
-
 GVM provides an interface to manage Go versions.
+
+The current maintainer of the fork is [@soulteary](https://github.com/soulteary), fixed some issues that were not exposed in the past few years, **and supports Apple M1 devices**.
+
+- Thanks to the original author of the program: By Josh Bussdieker (jbuss, jaja, jbussdieker) while working at [Moovweb](https://www.moovweb.com)
+- Thanks to previous project maintainers: [Benjamin Knigge](https://github.com/BenKnigge)
+
 
 Features
 ========
@@ -30,15 +30,39 @@ Installing
 
 To install:
 
-    curl -sSL https://github.com/soulteary/gvm/raw/master/binscripts/gvm-installer | bash
+```bash
+curl -sSL https://github.com/soulteary/gvm/raw/master/binscripts/gvm-installer | bash
+```
 
-Or if you are using zsh just change `bash` with `zsh`
+Or if you are using zsh just change `bash` with `zsh`.
+
+
+It is recommended to manually add the following content to `~/.bashrc` or `~/.zshrc` , then restart Terminal and use the `gvm` command.
+
+
+```bash
+export GO111MODULE=on
+# set mirroring, if you need to
+export GOPROXY=https://goproxy.io,direct
+# or `export GOPROXY="https://goproxy.cn"`
+export GOPATH="$HOME/go"
+PATH="$GOPATH/bin:$PATH"
+# you can set as your own mirror
+# export GO_BINARY_BASE_URL=https://golang.google.cn/dl/
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+export GOROOT_BOOTSTRAP=$GOROOT
+```
 
 Installing Go
 =============
-    gvm install go1.4
-    gvm use go1.4 [--default]
-Once this is done Go will be in the path and ready to use. $GOROOT and $GOPATH are set automatically.
+
+```bash
+gvm install go1.4
+gvm use go1.4 [--default]
+```
+
+Once this is done Go will be in the path and ready to use.
+`$GOROOT` and `$GOPATH` are set automatically.
 
 Additional options can be specified when installing Go:
 
@@ -54,7 +78,7 @@ Additional options can be specified when installing Go:
 ### A Note on Compiling Go 1.5+
 Go 1.5+ removed the C compilers from the toolchain and [replaced][compiler_note] them with one written in Go. Obviously, this creates a bootstrapping problem if you don't already have a working Go install. In order to compile Go 1.5+, make sure Go 1.4 is installed first.
 
-```
+```bash
 gvm install go1.4 -B
 gvm use go1.4
 export GOROOT_BOOTSTRAP=$GOROOT
@@ -67,17 +91,23 @@ List Go Versions
 ================
 To list all installed Go versions (The current version is prefixed with "=>"):
 
-    gvm list
+```bash
+gvm list
+```
 
 To list all Go versions available for download:
 
-    gvm listall
+```bash
+gvm listall
+```
 
 Uninstalling
 ============
 To completely remove gvm and all installed Go versions and packages:
 
-    gvm implode
+```bash
+gvm implode
+```
 
 If that doesn't work see the troubleshooting steps at the bottom of this page.
 
@@ -86,7 +116,7 @@ Mac OS X Requirements
  * Install Mercurial from https://www.mercurial-scm.org/downloads
  * Install Xcode Command Line Tools from the App Store.
 
-```
+```bash
 xcode-select --install
 brew update
 brew install mercurial
@@ -97,26 +127,33 @@ Linux Requirements
 
 Debian/Ubuntu
 ==================
-    sudo apt-get install curl git mercurial make binutils bison gcc build-essential
+
+```bash
+sudo apt-get install curl git mercurial make binutils bison gcc build-essential
+```
 
 Redhat/Centos
 ==================
 
-    sudo yum install curl
-    sudo yum install git
-    sudo yum install make
-    sudo yum install bison
-    sudo yum install gcc
-    sudo yum install glibc-devel
+```bash
+sudo yum install curl
+sudo yum install git
+sudo yum install make
+sudo yum install bison
+sudo yum install gcc
+sudo yum install glibc-devel
+```
 
  * Install Mercurial from http://pkgs.repoforge.org/mercurial/
 
 FreeBSD Requirements
 ====================
 
-    sudo pkg_add -r bash
-    sudo pkg_add -r git
-    sudo pkg_add -r mercurial
+```bash
+sudo pkg_add -r bash
+sudo pkg_add -r git
+sudo pkg_add -r mercurial
+```
 
 Vendoring Native Code and Dependencies
 ==================================================
@@ -151,17 +188,19 @@ system provides:
 
 Recipe for success:
 
-    gvm use go1.1
-    gvm pkgset use current-known-good
-    # Let's assume that this includes some C headers and native libraries, which
-    # Go's CGO facility wraps for us.  Let's assume that these native
-    # dependencies are at version V.
-    gvm pkgset create trial-next-version
-    # Let's assume that V+1 has come along and you want to safely trial it in
-    # your workspace.
-    gvm pkgset use trial-next-version
-    # Do your work here replicating current-known-good from above, but install
-    # V+1 into ${GVM_OVERLAY_PREFIX}.
+```bash
+gvm use go1.1
+gvm pkgset use current-known-good
+# Let's assume that this includes some C headers and native libraries, which
+# Go's CGO facility wraps for us.  Let's assume that these native
+# dependencies are at version V.
+gvm pkgset create trial-next-version
+# Let's assume that V+1 has come along and you want to safely trial it in
+# your workspace.
+gvm pkgset use trial-next-version
+# Do your work here replicating current-known-good from above, but install
+# V+1 into ${GVM_OVERLAY_PREFIX}.
+```
 
 See examples/native for a working example.
 
