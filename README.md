@@ -57,8 +57,11 @@ Installing Go
 =============
 
 ```bash
-gvm install go1.4
-gvm use go1.4 [--default]
+# download golang binaries, "clean and hygienic"
+gvm install go1.18 -B
+# or download golang source code, complie and install
+# gvm install go1.18
+gvm use go1.18 [--default]
 ```
 
 Once this is done Go will be in the path and ready to use.
@@ -76,13 +79,13 @@ Additional options can be specified when installing Go:
         -h,  --help               Display this message.
         
 ### A Note on Compiling Go 1.5+
-Go 1.5+ removed the C compilers from the toolchain and [replaced][compiler_note] them with one written in Go. Obviously, this creates a bootstrapping problem if you don't already have a working Go install. In order to compile Go 1.5+, make sure Go 1.4 is installed first.
+Go 1.5+ removed the C compilers from the toolchain and [replaced][compiler_note] them with one written in Go. Obviously, this creates a bootstrapping problem if you don't already have a working Go install. In order to compile Go 1.5+, make sure Go 1.18 is installed first.
 
 ```bash
-gvm install go1.4 -B
-gvm use go1.4
+gvm install go1.18 -B
+gvm use go1.18
 export GOROOT_BOOTSTRAP=$GOROOT
-gvm install go1.5
+gvm install go1.18
 ```
 
 [compiler_note]: https://docs.google.com/document/d/1OaatvGhEAq7VseQ9kkavxKNAfepWy2yhPUBs96FGV28/edit
@@ -189,7 +192,7 @@ system provides:
 Recipe for success:
 
 ```bash
-gvm use go1.1
+gvm use go1.18
 gvm pkgset use current-known-good
 # Let's assume that this includes some C headers and native libraries, which
 # Go's CGO facility wraps for us.  Let's assume that these native
