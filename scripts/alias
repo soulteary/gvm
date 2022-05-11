@@ -10,7 +10,7 @@ elif [[ -n $command ]]; then
 else
   echo "= gvm alias
 
-* http://github.com/moovweb/gvm
+* http://github.com/soulteary/gvm
 
 == DESCRIPTION:
 
